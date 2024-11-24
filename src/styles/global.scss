@@ -2,6 +2,7 @@
 @import "./vars.scss";
 @import "./mixins.scss";
 @import "./utils.scss";
+@import "./tailwind.scss";
 
 :root {
   --color-black: #{$black};
@@ -19,4 +20,19 @@
   --color-subbtle: #{$grey-1};
 
   --space-step: #{px-to-rem($space-step-size)};
+}
+
+@each $name, $weight in $font-weights {
+  $font-modif-name: capitalize-first($name);
+  @include font-face(
+    $font-family,
+    "~@assets/fonts/#{$font-family}-#{$font-modif-name}",
+    $weight
+  );
+}
+
+body {
+  font-family: $font-family;
+  color: var(--color-text);
+  @apply text-base;
 }
