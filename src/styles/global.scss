@@ -1,13 +1,22 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@use "sass:color";
+@import "./vars.scss";
+@import "./mixins.scss";
+@import "./utils.scss";
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --color-black: #{$black};
+  --color-white: #{$white};
+  --color-red: #{$red};
+  --color-green: #{color.scale($green, $lightness: 15%)};
+
+  --color-primary: #{$green};
+  --color-success: var(--color-green);
+  --color-error: #{--color-red};
+  --color-text: #{--color-black};
+  --color-divider: #{$grey-2};
+  --color-veil: #{color.scale($black, $alpha: -60%)};
+  --color-quiet: #{$grey-3};
+  --color-subbtle: #{$grey-1};
+
+  --space-step: #{px-to-rem($space-step-size)};
 }

@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .link {
+    @apply text-sm2;
+  }
+  .paragraph {
+    @apply text-sm pb-step-1;
+  }
+}
+
+@layer utilities {
+  .border-divider {
+    border: 1px solid var(--color-divider);
+  }
+
+  .bg-veil {
+    background: var(--color-veil);
+  }
+}

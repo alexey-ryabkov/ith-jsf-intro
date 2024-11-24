@@ -1,0 +1,43 @@
+@mixin font-face(
+  $font-name,
+  $font-path,
+  $font-weight: normal,
+  $font-style: normal,
+  $formats: ("eot", "woff2", "woff", "ttf"),
+  $font-display: swap
+) {
+  @font-face {
+    font-family: "#{$font-name}";
+    font-weight: #{$font-weight};
+    font-style: #{$font-style};
+    font-display: #{$font-display};
+
+    @if "eot" in $formats {
+      src: url("#{$font-path}.eot");
+    }
+    $src-list: ();
+    @if "eot" in $formats {
+      $src-list: append(
+        $src-list,
+        url("#{$font-path}.eot?#iefix") format("embedded-opentype"),
+        comma
+      );
+    }
+    @each $format in $formats {
+      @if $format == "ttf" {
+        $src-list: append(
+          $src-list,
+          url("#{$font-path}.#{$format}") format("truetype"),
+          comma
+        );
+      } @else if $format != "eot" {
+        $src-list: append(
+          $src-list,
+          url("#{$font-path}.#{$format}") format("#{$format}"),
+          comma
+        );
+      }
+    }
+    src: #{$src-list};
+  }
+}
