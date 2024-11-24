@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .link {
+    @apply text-smb underline;
+  }
+
+  .paragraph {
+    @apply text-sm pb-step-1;
+  }
+
+  .divider {
+    @apply h-px w-full my-step-2 bg-outline border-0;
+  }
+}
+
+@layer utilities {
+  .bordered {
+    border: var(--border);
+  }
+
+  .spaced-1 {
+    @apply p-step-1;
+  }
+
+  .spaced-1-2 {
+    @apply px-step-1 py-step-2;
+  }
+
+  .spaced-2 {
+    @apply p-step-2;
+  }
+
+  .spaced-2-4 {
+    @apply px-step-2 py-step-4;
+  }
+
+  .spaced-4 {
+    @apply p-step-4;
+  }
+
+  .veil {
+    @apply size-full;
+    background: var(--color-veil);
+  }
+}

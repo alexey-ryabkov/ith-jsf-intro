@@ -74,8 +74,7 @@ module.exports = {
         white: "var(--color-white)",
         red: "var(--color-red)",
         green: "var(--color-green)",
-        // veil: "var(--color-veil)",
-        // subtle: "var(--color-subbtle)",
+        outline: "var(--color-outline)",
       },
       spacing: {
         ...Array(10)

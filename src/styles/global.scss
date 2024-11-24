@@ -14,12 +14,14 @@
   --color-success: var(--color-green);
   --color-error: #{--color-red};
   --color-text: #{--color-black};
-  --color-divider: #{$grey-2};
+  --color-outline: #{$grey-2};
   --color-veil: #{color.scale($black, $alpha: -60%)};
   --color-quiet: #{$grey-3};
   --color-subbtle: #{$grey-1};
 
   --space-step: #{px-to-rem($space-step-size)};
+
+  --border: 1px solid var(--color-outline);
 }
 
 @each $name, $weight in $font-weights {
