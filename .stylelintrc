@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-tailwindcss/scss",
+    "stylelint-prettier/recommended"
+  ],
+  "plugins": ["stylelint-scss", "stylelint-prettier"],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "no-empty-source": null,
+    "selector-class-pattern": null,
+    "color-function-notation": "modern",
+    "custom-property-empty-line-before": null,
+    "function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": ["capitalize-first"]
+      }
+    ],
+    "scss/function-no-unknown": [
+      true,
+      {
+        "ignoreFunctions": ["capitalize-first"]
+      }
+    ],
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/double-slash-comment-empty-line-before": null,
+    "prettier/prettier": [true, { "severity": "warning" }]
+  },
+  "maxWarnings": 7,
+  "reportDescriptionlessDisables": true,
+  "reportInvalidScopeDisables": true,
+  "reportNeedlessDisables": true
+}
