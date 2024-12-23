@@ -1,43 +1,49 @@
+@use 'sass:list';
+
 @mixin font-face(
   $font-name,
   $font-path,
   $font-weight: normal,
   $font-style: normal,
-  $formats: ("eot", "woff2", "woff", "ttf"),
+  $formats: ('eot', 'woff2', 'woff', 'ttf'),
   $font-display: swap
 ) {
   @font-face {
-    font-family: "#{$font-name}";
+    font-family: '#{$font-name}';
     font-weight: #{$font-weight};
     font-style: #{$font-style};
     font-display: #{$font-display};
 
-    @if "eot" in $formats {
-      src: url("#{$font-path}.eot");
+    @if 'eot' in $formats {
+      src: url('#{$font-path}.eot');
     }
+
     $src-list: ();
-    @if "eot" in $formats {
-      $src-list: append(
+
+    @if 'eot' in $formats {
+      $src-list: list.append(
         $src-list,
-        url("#{$font-path}.eot?#iefix") format("embedded-opentype"),
+        url('#{$font-path}.eot?#iefix') format('embedded-opentype'),
         comma
       );
     }
+
     @each $format in $formats {
-      @if $format == "ttf" {
-        $src-list: append(
+      @if $format == 'ttf' {
+        $src-list: list.append(
           $src-list,
-          url("#{$font-path}.#{$format}") format("truetype"),
+          url('#{$font-path}.#{$format}') format('truetype'),
           comma
         );
-      } @else if $format != "eot" {
-        $src-list: append(
+      } @else if $format != 'eot' {
+        $src-list: list.append(
           $src-list,
-          url("#{$font-path}.#{$format}") format("#{$format}"),
+          url('#{$font-path}.#{$format}') format('#{$format}'),
           comma
         );
       }
     }
+
     src: #{$src-list};
   }
 }

@@ -1,98 +1,27 @@
+const fontSize = require('./src/tailwindcss/theme/fontSize');
+const borderRadius = require('./src/tailwindcss/theme/borderRadius');
+const colors = require('./src/tailwindcss/theme/colors');
+const spacing = require('./src/tailwindcss/theme/spacing');
+const customComponents = require('./src/tailwindcss/plugins/customComponents');
+const customUtilities = require('./src/tailwindcss/plugins/customUtilities');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    './public/index.html',
+    './src/components/**/*.{js,jsx,ts,tsx}',
+    './src/styles/*.scss',
+  ],
   theme: {
-    fontSize: {
-      xs: [
-        "0.75rem",
-        {
-          lineHeight: "0.675rem",
-          fontWeight: "600",
-        },
-      ],
-      sm: [
-        "1rem",
-        {
-          lineHeight: "1.3rem",
-          fontWeight: "400",
-        },
-      ],
-      smb: [
-        "1rem",
-        {
-          lineHeight: "1.26rem",
-          fontWeight: "500",
-        },
-      ],
-      base: [
-        "1.25rem",
-        {
-          lineHeight: "1.625rem",
-          fontWeight: "500",
-        },
-      ],
-      baseb: [
-        "1.25rem",
-        {
-          lineHeight: "1.625rem",
-          fontWeight: "600",
-        },
-      ],
-      lg: [
-        "2.5rem",
-        {
-          lineHeight: "3.25rem",
-          fontWeight: "500",
-        },
-      ],
-      lgb: [
-        "2.5rem",
-        {
-          lineHeight: "2.75rem",
-          fontWeight: "600",
-        },
-      ],
-      xl: [
-        "4rem",
-        {
-          lineHeight: "4.4rem",
-          fontWeight: "700",
-        },
-      ],
-      "2xl": [
-        "6rem",
-        {
-          lineHeight: "6.6rem",
-          fontWeight: "700",
-        },
-      ],
-    },
+    fontSize,
+    borderRadius,
     extend: {
-      colors: {
-        primary: "var(--color-primary)",
-        black: "var(--color-black)",
-        white: "var(--color-white)",
-        red: "var(--color-red)",
-        green: "var(--color-green)",
-        outline: "var(--color-outline)",
+      colors,
+      spacing,
+      gridTemplateColumns: {
+        'left-bigger': '0.588fr 0.412fr',
       },
-      spacing: {
-        ...Array(10)
-          .keys()
-          .map((i) => ++i)
-          .reduce((res, multi) => {
-            res[`step-${multi}`] = `calc(var(--space-step) * ${multi})`;
-            return res;
-          }, {}),
-        small: "1.625rem",
-        middle: "2.25rem",
-        large: "3.625rem",
-      },
-    },
-    borderRadius: {
-      DEFAULT: "0.75rem",
-      sm: "0.4375rem",
     },
   },
-  plugins: [],
+  plugins: [customComponents, customUtilities],
 };

@@ -1,40 +1,46 @@
-@use "sass:color";
-@import "./vars.scss";
-@import "./mixins.scss";
-@import "./utils.scss";
-@import "./tailwind.scss";
+@use 'sass:color';
+@import './vars';
+@import './mixins';
+@import './utils';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --color-black: #{$black};
   --color-white: #{$white};
-  --color-red: #{$red};
   --color-green: #{color.scale($green, $lightness: 15%)};
+  --color-red: #{$red};
 
   --color-primary: #{$green};
   --color-success: var(--color-green);
-  --color-error: #{--color-red};
-  --color-text: #{--color-black};
-  --color-outline: #{$grey-2};
+  --color-error: var(--color-red);
+  --color-outline: #ddd;
   --color-veil: #{color.scale($black, $alpha: -60%)};
-  --color-quiet: #{$grey-3};
-  --color-subbtle: #{$grey-1};
+  --color-quiet: #8b8b8b;
+  --color-subbtle: #f1f3f4;
 
   --space-step: #{px-to-rem($space-step-size)};
-
-  --border: 1px solid var(--color-outline);
 }
 
 @each $name, $weight in $font-weights {
   $font-modif-name: capitalize-first($name);
+
   @include font-face(
     $font-family,
-    "~@assets/fonts/#{$font-family}-#{$font-modif-name}",
+    '~@assets/fonts/#{$font-family}-#{$font-modif-name}',
     $weight
   );
 }
 
+html {
+  font-size: #{$rem-size}px;
+}
+
 body {
+  @apply text-base text-black;
+
   font-family: $font-family;
-  color: var(--color-text);
-  @apply text-base;
+  margin-inline: auto;
+  width: 90rem;
 }
