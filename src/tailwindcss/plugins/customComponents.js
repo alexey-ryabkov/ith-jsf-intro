@@ -43,7 +43,7 @@ module.exports = plugin(function ({ addComponents, matchComponents, theme }) {
         '&.fulfilled': {
           [`@apply ${utilsFulfilled}`]: '',
         },
-        '@apply hover:bg-black hover:text-white': '',
+        '@apply hover:bg-black hover:text-white disabled:disabled-control': '',
         display: 'inline-block',
       }),
     },

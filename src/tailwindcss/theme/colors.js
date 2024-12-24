@@ -5,7 +5,7 @@ module.exports = {
   green: 'var(--color-green)',
   primary: 'var(--color-primary)',
   quiet: 'var(--color-quiet)',
-  subtle: 'var(--color-subbtle)',
+  subtle: 'var(--color-subtle)',
   outline: 'var(--color-outline)',
   veil: 'var(--color-veil)',
 };

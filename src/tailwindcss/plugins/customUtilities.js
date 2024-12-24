@@ -16,6 +16,15 @@ module.exports = plugin(function ({ addUtilities, matchUtilities, theme }) {
     '.fulfilled': {
       pointerEvents: 'none',
     },
+    '.focused': {
+      outline: `2px solid ${theme('colors.primary')}`,
+    },
+    '.disabled-control': {
+      pointerEvents: 'none',
+      background: theme('colors.subtle'),
+      borderColor: theme('colors.outline'),
+      color: theme('colors.quiet'),
+    },
   });
   matchUtilities(
     {

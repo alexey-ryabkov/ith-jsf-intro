@@ -18,7 +18,7 @@
   --color-outline: #ddd;
   --color-veil: #{color.scale($black, $alpha: -60%)};
   --color-quiet: #8b8b8b;
-  --color-subbtle: #f1f3f4;
+  --color-subtle: #f1f3f4;
 
   --space-step: #{px-to-rem($space-step-size)};
 }

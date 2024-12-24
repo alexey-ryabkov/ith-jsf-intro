@@ -2,8 +2,9 @@ const fontSize = require('./src/tailwindcss/theme/fontSize');
 const borderRadius = require('./src/tailwindcss/theme/borderRadius');
 const colors = require('./src/tailwindcss/theme/colors');
 const spacing = require('./src/tailwindcss/theme/spacing');
-const customComponents = require('./src/tailwindcss/plugins/customComponents');
+const customBase = require('./src/tailwindcss/plugins/customBase');
 const customUtilities = require('./src/tailwindcss/plugins/customUtilities');
+const customComponents = require('./src/tailwindcss/plugins/customComponents');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -23,5 +24,5 @@ module.exports = {
       },
     },
   },
-  plugins: [customComponents, customUtilities],
+  plugins: [customBase, customUtilities, customComponents],
 };
