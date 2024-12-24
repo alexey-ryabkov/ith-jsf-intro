@@ -1,9 +1,9 @@
-const path = require("path");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   webpack: {
     configure: (webpackConfig) => {
+      // use tsconfig aliases
       webpackConfig.resolve.plugins = [
         ...(webpackConfig.resolve.plugins || []),
         new TsconfigPathsPlugin({
@@ -12,8 +12,13 @@ module.exports = {
       ];
       return webpackConfig;
     },
-    // alias: {
-    //   "@utils": path.resolve(__dirname, "src/utils"),
-    // },
-  },  
+  },
+  devServer: (devServerConfig) => {
+    // switch off dev-server errors boundry
+    devServerConfig.client = {
+      ...devServerConfig.client,
+      overlay: false,
+    };
+    return devServerConfig;
+  },
 };
