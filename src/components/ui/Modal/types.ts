@@ -1,11 +1,14 @@
 import type { ComponentProps, PropsWithChildren } from 'react';
+import { NotificationType } from '@app/types';
 
-type ModalProps = PropsWithChildren<{
+export { NotificationType };
+export type ModalProps = PropsWithChildren<{
   title: string;
-  type?: 'success' | 'error' | 'default';
+  type?: NotificationType;
   opened?: boolean;
-  closable?: boolean;
   veil?: boolean;
+  closable?: boolean;
+  closeByOutsideClick?: boolean;
+  onClose?: () => void;
 }> &
   ComponentProps<'div'>;
-export default ModalProps;

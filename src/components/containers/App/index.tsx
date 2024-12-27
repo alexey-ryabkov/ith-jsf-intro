@@ -1,7 +1,10 @@
 import { Suspense } from 'react';
 import { BrowserRouter } from 'react-router';
-import AppRoutes from '@app/routes';
+import { Provider } from 'react-redux';
 import ErrorBoundary from '@containers/ErrorBoundary';
+import AppRoutes from '@app/routes';
+import { store } from '@app/store';
+import Notifier from '@components/Notifier';
 
 function App() {
   return (
@@ -14,7 +17,10 @@ function App() {
             </div>
           }
         >
-          <AppRoutes />
+          <Provider store={store}>
+            <AppRoutes />
+            <Notifier />
+          </Provider>
         </Suspense>
       </ErrorBoundary>
     </BrowserRouter>
