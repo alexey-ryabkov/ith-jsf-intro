@@ -19,6 +19,9 @@ module.exports = plugin(function ({ addUtilities, matchUtilities, theme }) {
     '.focused': {
       outline: `2px solid ${theme('colors.primary')}`,
     },
+    '.invalid': {
+      outline: `2px solid ${theme('colors.red')}`,
+    },
     '.disabled-control': {
       pointerEvents: 'none',
       background: theme('colors.subtle'),
@@ -39,6 +42,7 @@ module.exports = plugin(function ({ addUtilities, matchUtilities, theme }) {
       },
     },
     {
+      // TODO делать объект из массива (reduce)
       values: {
         half: 'half',
         'half-1': 'half-1',
