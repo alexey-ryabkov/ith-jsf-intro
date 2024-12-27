@@ -35,3 +35,14 @@ export type Order = {
   user: UserData;
   items: CartItem[];
 };
+
+export type Notification = {
+  title: string;
+  text: string;
+  type?: NotificationType;
+};
+export const enum NotificationType {
+  default,
+  success,
+  error,
+}
