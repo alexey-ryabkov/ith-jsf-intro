@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { useAppSelector } from '@app/hooks';
+import { selectInCartCount } from '@store/selectors';
 import { ReactComponent as BasketIcon } from '@assets/icons/basket.svg';
 
-const BasketBox: FC = () => {
-  // TODO recieve from redux store
-  const count = 3;
+const CartBox = () => {
+  const count = useAppSelector(selectInCartCount);
   return (
     <div className="relative">
       {count ? (
@@ -15,5 +15,4 @@ const BasketBox: FC = () => {
     </div>
   );
 };
-
-export default BasketBox;
+export default CartBox;

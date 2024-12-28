@@ -36,3 +36,26 @@ export async function processApiRequest<
 
 export const defineResponseSchema = (responseSchema: ZodTypeAny) =>
   responseSchema.or(statusMessageSchema);
+
+export const discountPercent = (price: number, discountPrice?: number) =>
+  discountPrice ? Math.round(((price - discountPrice) * 100) / price) : 0;
+
+export const pluralized = (
+  count: number,
+  singular = 'item',
+  plural = pluralizeWord(singular),
+) => (count === 1 ? `${count} ${singular}` : `${count} ${plural}`);
+
+export function pluralizeWord(word: string): string {
+  if (word.endsWith('y') && !/[aeiou]y$/.test(word)) {
+    return word.slice(0, -1) + 'ies';
+  } else if (/[sxz]$/.test(word) || /[sh]$/.test(word)) {
+    return word + 'es';
+  } else if (word.endsWith('f')) {
+    return word.slice(0, -1) + 'ves';
+  } else if (word.endsWith('fe')) {
+    return word.slice(0, -2) + 'ves';
+  } else {
+    return word + 's';
+  }
+}
