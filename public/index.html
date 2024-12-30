@@ -5,15 +5,44 @@
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#393" />
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <title>React Redux App</title>
+  <title>React Redux Course App</title>
 </head>
 
 <body class="min-h-screen">
-  <div id="root" class="flex flex-col min-h-screen"></div>
+  <div id="root" class="flex flex-col min-h-screen">
+    <!-- preloader -->
+    <div
+      style="display: flex; align-items: center; justify-content: center; position: fixed; inset: 0; backgroud: white">
+      <svg class="preloader" width="48" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
+        <path fill="none" stroke="#393" stroke-width="15" stroke-linecap="round" stroke-dasharray="300 385"
+          stroke-dashoffset="0"
+          d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z">
+          <animate class="animate-preloading" attributeName="stroke-dashoffset" calcMode="spline" dur="2"
+            values="685;-685" keySplines="0 0 1 1" repeatCount="indefinite" />
+        </path>
+      </svg>
+    </div>
+  </div>
+  <style>
+    /* force preloader animation while resources are loading */
+    @keyframes dash {
+      from {
+        stroke-dashoffset: 685;
+      }
+
+      to {
+        stroke-dashoffset: -685;
+      }
+    }
+
+    path:has(.animate-preloading) {
+      animation: dash 2s linear infinite;
+    }
+  </style>
 </body>
 
 </html>

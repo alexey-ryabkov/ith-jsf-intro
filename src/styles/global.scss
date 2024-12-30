@@ -38,9 +38,8 @@ html {
 }
 
 body {
-  @apply text-base text-black;
+  @apply font-sans text-base text-black;
 
-  font-family: $font-family;
   margin-inline: auto;
   width: 90rem;
 }

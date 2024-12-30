@@ -1,15 +1,7 @@
 import { Component, ErrorInfo, PropsWithChildren } from 'react';
 import { APP_ROUTES } from '@app/constants';
-import TitleBox from '@ui/TitleBox';
-import TitleBoxProps from '@ui/TitleBox/types';
-
-type ErrorBoundaryProps = {
-  desc?: string;
-  size?: TitleBoxProps['level'];
-};
-type ErrorBoundaryState = {
-  hasError: boolean;
-};
+import ErrorBox from '@ui/MessageBox';
+import { ErrorBoundaryProps, ErrorBoundaryState } from './types';
 
 class ErrorBoundary extends Component<
   PropsWithChildren<ErrorBoundaryProps>,
@@ -59,13 +51,13 @@ class ErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="fixed inset-0 flex items-center justify-center text-base-b px-step-5">
-          <div>
-            <TitleBox level={this.props.size ?? 2} className="!block">
-              {this.props.desc ?? 'Oops, something went wrong...'}
-            </TitleBox>
-            <div className="flex justify-center space-x-step-2">
-              <a href={APP_ROUTES.MAIN} className="btn">
+        <div
+          className="fixed inset-0 flex items-center justify-center text-base-b 
+          px-step-5 bg-red text-white"
+        >
+          <ErrorBox title={this.props.desc ?? 'Oops, something went wrong...'}>
+            <div className="flex justify-center space-x-step-2 mt-step-4">
+              <a href={APP_ROUTES.MAIN} className="btn-alternative">
                 Go Home
               </a>
               <button
@@ -75,7 +67,7 @@ class ErrorBoundary extends Component<
                 Try to Reload
               </button>
             </div>
-          </div>
+          </ErrorBox>
         </div>
       );
     }

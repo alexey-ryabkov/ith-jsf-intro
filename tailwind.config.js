@@ -15,6 +15,9 @@ module.exports = {
   ],
   theme: {
     fontSize,
+    fontFamily: {
+      sans: ['Montserrat', 'sans-serif'],
+    },
     borderRadius,
     extend: {
       colors,
