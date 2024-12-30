@@ -3,7 +3,7 @@ import {
   CategoriesList,
   CategoryProductsList,
   ProductsList,
-  ProductDetails,
+  ProductData,
   Order,
   DiscountCouponRequest,
 } from './types';
@@ -12,7 +12,7 @@ import {
   categoryProductsListSchema,
   productsListSchema,
   statusMessageSchema,
-  productDetailsSchema,
+  productDataSchema,
 } from './schemas';
 import { processApiRequest } from './utils';
 
@@ -22,22 +22,22 @@ export const getAllCategories = () =>
     categoriesListSchema,
   );
 
-export const getCategoryProducts = (categoryId: number) =>
-  processApiRequest<CategoryProductsList>(
-    () => fetch(`${API_BASE_URL}${API_ENDPOINTS.CATEGORY}/${categoryId}`),
-    categoryProductsListSchema,
-  );
-
 export const getAllProducts = () =>
   processApiRequest<ProductsList>(
     () => fetch(`${API_BASE_URL}${API_ENDPOINTS.PRODUCT}/all`),
     productsListSchema,
   );
 
-export const getProduct = (productId: number) =>
-  processApiRequest<ProductDetails>(
+export const getCategoryProducts = (categoryId: number) =>
+  processApiRequest<CategoryProductsList>(
+    () => fetch(`${API_BASE_URL}${API_ENDPOINTS.CATEGORY}/${categoryId}`),
+    categoryProductsListSchema,
+  );
+
+export const getProductData = (productId: number) =>
+  processApiRequest<ProductData>(
     () => fetch(`${API_BASE_URL}${API_ENDPOINTS.PRODUCT}/${productId}`),
-    productDetailsSchema,
+    productDataSchema,
   );
 
 export const sendCouponRequest = (data: DiscountCouponRequest) =>

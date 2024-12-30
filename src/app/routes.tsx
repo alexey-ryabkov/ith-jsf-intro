@@ -6,7 +6,7 @@ const MainPage = lazy(() => import('@pages/Main'));
 const CategoriesPage = lazy(() => import('@pages/Categories'));
 const CategoryPage = lazy(() => import('@pages/Category'));
 const ProductsPage = lazy(() => import('@pages/Products'));
-const ProductDetailsPage = lazy(() => import('@pages/ProductDetails'));
+const ProductDetailPage = lazy(() => import('@pages/ProductDetail'));
 const SalesPage = lazy(() => import('@pages/Sales'));
 const CartPage = lazy(() => import('@pages/Cart'));
 const Error404Page = lazy(() => import('@pages/Error404'));
@@ -20,7 +20,7 @@ const AppRoutes = () => (
     </Route>
     <Route path={APP_ROUTES.PRODUCTS}>
       <Route index element={<ProductsPage />} />
-      <Route path=":id" element={<ProductDetailsPage />} />
+      <Route path=":id" element={<ProductDetailPage />} />
     </Route>
     <Route path={APP_ROUTES.SALES} element={<SalesPage />} />
     <Route path={APP_ROUTES.CART} element={<CartPage />} />

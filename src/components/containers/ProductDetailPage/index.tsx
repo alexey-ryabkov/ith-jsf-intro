@@ -1,14 +1,14 @@
 import { type FC } from 'react';
 import { useParams } from 'react-router';
 import BaseLayout from '@containers/BaseLayout';
-import ProductDetails from '@components/ProductDetails';
+import ProductData from '@components/ProductData';
 
-const ProductDetailsPage: FC = () => {
+const ProductDetailPage: FC = () => {
   const { id } = useParams();
   return (
     <BaseLayout className="pt-[7.25rem] px-step-5 pb-step-10">
-      <ProductDetails id={Number(id)} />
+      <ProductData id={Number(id)} />
     </BaseLayout>
   );
 };
-export default ProductDetailsPage;
+export default ProductDetailPage;

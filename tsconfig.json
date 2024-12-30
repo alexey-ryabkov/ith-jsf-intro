@@ -17,13 +17,12 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
-      "@app/*": ["app/*"],
       "@store/*": ["app/store/*"],
-      "@features/*": ["features/*"],
+      "@app/*": ["app/*"],
       "@containers/*": ["components/containers/*"],
       "@components/*": ["components/lib/*"],
       "@layouts/*": ["components/containers/*Layout"],
-      "@pages/*": ["components/pages/*"],
+      "@pages/*": ["components/containers/*Page"],
       "@ui/*": ["components/ui/*"],
       "@styles/*": ["styles/*"],
       "@assets/*": ["assets/*"]

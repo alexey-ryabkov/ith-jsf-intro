@@ -1,6 +1,6 @@
 import cn from 'classnames';
-import type CheckboxProps from './types';
 import { ReactComponent as CheckIcon } from '@assets/icons/check.svg';
+import type CheckboxProps from './types';
 
 const Checkbox = ({
   id,

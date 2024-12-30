@@ -19,7 +19,6 @@ import {
   selectIsNotificationShowing,
 } from '@store/selectors';
 import { Product, ProductsList, CartItem } from '@app/types';
-import NoImg from '@assets/images/no_image.jpeg';
 import { API_BASE_URL, APP_ROUTES } from '@app/constants';
 import { pluralized } from '@app/utils';
 
@@ -93,7 +92,7 @@ const Cart: FC = () => {
               <div className="flex-none border-e border-outline">
                 <img
                   className="w-[12.5rem] rounded"
-                  src={image ? `${API_BASE_URL}${image}` : NoImg}
+                  src={`${API_BASE_URL}${image}`}
                   alt={title}
                 />
               </div>

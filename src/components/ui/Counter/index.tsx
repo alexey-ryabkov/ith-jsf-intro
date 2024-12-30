@@ -1,14 +1,8 @@
-import {
-  type ChangeEvent,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { type ChangeEvent, useMemo, useRef, useState } from 'react';
 import cn from 'classnames';
-import type CounterProps from './types';
 import { ReactComponent as MinusIcon } from '@assets/icons/minus.svg';
 import { ReactComponent as PlusIcon } from '@assets/icons/plus.svg';
+import type CounterProps from './types';
 
 const BTN_CLS_UTILS = `absolute top-0 w-large aspect-square text-quiet bordered rounded-small 
   flex items-center justify-center  *:disabled:opacity-25 disabled:cursor-not-allowed`;
@@ -37,14 +31,9 @@ const Counter = ({
   );
   const [inputValue, setInputValue] = useState(String(quantity));
 
-  const notifyChange = useCallback(
-    (value: number) => {
-      onChange?.({
-        target: { value },
-      } as unknown as ChangeEvent<HTMLInputElement>);
-    },
-    [onChange],
-  );
+  const notifyChange = (value: number) => {
+    onChange?.(value);
+  };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();

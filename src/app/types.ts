@@ -14,7 +14,7 @@ export type CategoriesList = z.infer<typeof s.categoriesListSchema>;
 export type Product = z.infer<typeof s.productSchema>;
 export type ProductsList = z.infer<typeof s.productsListSchema>;
 export type CategoryProductsList = z.infer<typeof s.categoryProductsListSchema>;
-export type ProductDetails = z.infer<typeof s.productDetailsSchema>;
+export type ProductData = z.infer<typeof s.productDataSchema>;
 export type ApiStatusMessage = z.infer<typeof s.statusMessageSchema>;
 
 export type ApiRequest = () => Promise<Response>;

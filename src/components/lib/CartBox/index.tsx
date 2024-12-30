@@ -11,7 +11,7 @@ const CartBox = () => {
           {count}
         </span>
       ) : null}
-      <BasketIcon className="w-11" />
+      <BasketIcon className="w-[2.75rem]" />
     </div>
   );
 };

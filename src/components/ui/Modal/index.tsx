@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
-import TitleBox from '@ui/TitleBox';
 import { ReactComponent as CrossIcon } from '@assets/icons/cross.svg';
+import TitleBox from '@ui/TitleBox';
 import { NotificationType, type ModalProps } from './types';
 
 const Modal = ({

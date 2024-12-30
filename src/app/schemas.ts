@@ -29,7 +29,7 @@ export const categoryProductsListSchema = z.object({
   data: productsListSchema,
 });
 
-export const productDetailsSchema = productsListSchema.length(1);
+export const productDataSchema = productsListSchema.length(1);
 
 export const statusMessageSchema = z.object({
   status: z.literal('ERR').or(z.literal('OK')),
