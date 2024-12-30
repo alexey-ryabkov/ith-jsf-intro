@@ -14,3 +14,11 @@ export const enum API_ENDPOINTS {
   SALE = '/sale',
   ORDER = '/order',
 }
+
+export const enum STORE_REDUCERS {
+  CART = 'cart',
+  CATEGORIES = 'categories',
+  PRODUCTS = 'products',
+  PRODUCT_DATA = 'product_data',
+  NOTIFICATION = 'notification',
+}

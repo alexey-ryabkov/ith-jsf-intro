@@ -1,29 +1,37 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router';
 import cn from 'classnames';
-import { CategoriesListProps } from './types';
-import { getAllCategories } from '@app/services';
-import { CategoriesList as CategoriesListT } from '@app/types';
 import { API_BASE_URL, APP_ROUTES } from '@app/constants';
+import { useAppDispatch, useAppSelector } from '@app/hooks';
+import { selectCategories, selectIsCategoriesLoading } from '@store/selectors';
+import { clearCategories, fetchCategories } from '@store/actions';
+import Preloader from '@ui/Preloader';
+import { CategoriesListProps } from './types';
 
 const CategoriesList = ({
   cols,
   limit = Infinity,
   className: cls,
 }: CategoriesListProps) => {
-  const gridColsCls = cols === 4 ? 'grid-cols-4' : 'grid-cols-5';
-  const [items, setItems] = useState<CategoriesListT>([]);
+  const isLoading = useAppSelector(selectIsCategoriesLoading);
+  const items = useAppSelector(selectCategories);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getAllCategories().then((result) => {
-      if (result && !('status' in result)) {
-        setItems(result);
-      }
-    });
-  }, []);
+    dispatch(fetchCategories());
+    return () => {
+      dispatch(clearCategories());
+    };
+  }, [dispatch]);
+
+  const wrapperCls = useMemo(
+    () =>
+      cn(cls, 'grid  gap-step-4', cols === 4 ? 'grid-cols-4' : 'grid-cols-5'),
+    [cls, cols],
+  );
 
   return items.length ? (
-    <div className={cn(cls, 'grid  gap-step-4', gridColsCls)}>
+    <div className={wrapperCls}>
       {items.slice(0, limit).map(({ id, title, image }) => (
         <div key={id} className="space-y-step-2 text-center">
           <div>
@@ -41,8 +49,10 @@ const CategoriesList = ({
         </div>
       ))}
     </div>
+  ) : isLoading ? (
+    <Preloader />
   ) : (
-    <div className="">Have no any categories...</div>
+    <div className="text-quiet">Have no any categories...</div>
   );
 };
 export default CategoriesList;

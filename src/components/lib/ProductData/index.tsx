@@ -1,20 +1,29 @@
 import { useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
-import TitleBox from '@ui/TitleBox';
-import Counter from '@ui/Counter';
-import { ProductDetailsProps } from './types';
-import { Product } from '@app/types';
-import { getProduct } from '@app/services';
-import { discountPercent } from '@app/utils';
 import { API_BASE_URL } from '@app/constants';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { selectCartItems } from '@store/selectors';
-import { addCartItem, delCartItem } from '@store/actions';
+import { discountPercent } from '@app/utils';
+import {
+  selectCartItems,
+  selectIsProductDataLoading,
+  selectProductData,
+} from '@store/selectors';
+import {
+  addCartItem,
+  clearProductData,
+  delCartItem,
+  fetchProductData,
+} from '@store/actions';
+import TitleBox from '@ui/TitleBox';
+import Counter from '@ui/Counter';
+import Preloader from '@ui/Preloader';
+import { ProductDataProps } from './types';
 
-const ProductDetails = ({ id, className: cls }: ProductDetailsProps) => {
-  const cartItems = useAppSelector(selectCartItems);
-  const [data, setData] = useState<Product | null>(null);
+const ProductData = ({ id, className: cls }: ProductDataProps) => {
+  const isLoading = useAppSelector(selectIsProductDataLoading);
+  const data = useAppSelector(selectProductData);
   const { title, image, price, discont_price, description } = data ?? {};
+  const cartItems = useAppSelector(selectCartItems);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useAppDispatch();
 
@@ -24,14 +33,11 @@ const ProductDetails = ({ id, className: cls }: ProductDetailsProps) => {
   );
 
   useEffect(() => {
-    getProduct(Number(id)).then((result) => {
-      if (result && !('status' in result)) {
-        if (!('status' in result)) {
-          setData(result[0]);
-        }
-      }
-    });
-  });
+    dispatch(fetchProductData(id));
+    return () => {
+      dispatch(clearProductData());
+    };
+  }, [id, dispatch]);
 
   return data ? (
     <div className={cn(cls, 'grid-left-bigger')}>
@@ -97,8 +103,10 @@ const ProductDetails = ({ id, className: cls }: ProductDetailsProps) => {
         </div>
       </div>
     </div>
+  ) : isLoading ? (
+    <Preloader />
   ) : (
-    <div className="">No data for this product...</div>
+    <div className="text-quiet">No data for this product...</div>
   );
 };
-export default ProductDetails;
+export default ProductData;

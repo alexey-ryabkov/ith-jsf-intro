@@ -1,6 +1,6 @@
 import { TagCssAttrs } from '@app/types';
 
 export type ProductsListProps = {
-  category?: number;
+  categoryId?: number | null;
   limit?: number;
 } & TagCssAttrs;

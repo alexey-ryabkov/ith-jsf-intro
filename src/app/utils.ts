@@ -1,5 +1,5 @@
 import { type ZodTypeAny } from 'zod';
-import { ApiRequest, ApiResponse } from '@app/types';
+import { ApiRequest, ApiResponse, ApiStatusMessage } from '@app/types';
 import { statusMessageSchema } from '@app/schemas';
 import { store } from '@app/store';
 import { showError } from '@store/actions';
@@ -34,8 +34,21 @@ export async function processApiRequest<
   return;
 }
 
-export const defineResponseSchema = (responseSchema: ZodTypeAny) =>
-  responseSchema.or(statusMessageSchema);
+export function checkFetchResultAndHandleFailed<T extends object>(
+  result: T | ApiStatusMessage | undefined,
+  handler: (msg?: string) => void,
+): result is T {
+  if (result) {
+    if (!('status' in result)) {
+      return true;
+    } else {
+      const { status, message } = result;
+      handler(status === 'ERR' ? message : 'Unexpected server response');
+      return false;
+    }
+  }
+  return false;
+}
 
 export const discountPercent = (price: number, discountPrice?: number) =>
   discountPrice ? Math.round(((price - discountPrice) * 100) / price) : 0;
@@ -59,3 +72,6 @@ export function pluralizeWord(word: string): string {
     return word + 's';
   }
 }
+
+export const defineResponseSchema = (responseSchema: ZodTypeAny) =>
+  responseSchema.or(statusMessageSchema);

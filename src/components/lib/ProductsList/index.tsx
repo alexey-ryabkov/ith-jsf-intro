@@ -1,22 +1,31 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router';
 import cn from 'classnames';
-import { ProductsList as ProductsListT } from '@app/types';
-import { getAllProducts, getCategoryProducts } from '@app/services';
 import { API_BASE_URL, APP_ROUTES } from '@app/constants';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { addCartItem, delCartItem } from '@store/actions';
 import { discountPercent } from '@app/utils';
+import {
+  addCartItem,
+  clearCategoryProducts,
+  delCartItem,
+  fetchProducts,
+} from '@store/actions';
+import {
+  selectCartItems,
+  selectIsProductsLoading,
+  selectProducts,
+} from '@store/selectors';
+import Preloader from '@ui/Preloader';
 import { ProductsListProps } from './types';
-import { selectCartItems } from '@store/selectors';
 
 const ProductsList = ({
-  category,
+  categoryId = null,
   limit,
   className: cls,
 }: ProductsListProps) => {
+  const isLoading = useAppSelector(selectIsProductsLoading);
+  const items = useAppSelector(selectProducts);
   const cartItems = useAppSelector(selectCartItems);
-  const [items, setItems] = useState<ProductsListT>([]);
   const dispatch = useAppDispatch();
 
   const productsInCart = useMemo(() => {
@@ -28,15 +37,11 @@ const ProductsList = ({
   }, [cartItems, items]);
 
   useEffect(() => {
-    (category ? getCategoryProducts(category) : getAllProducts()).then(
-      (result) => {
-        if (result && !('status' in result)) {
-          if (!('status' in result))
-            setItems('data' in result ? result.data : result);
-        }
-      },
-    );
-  }, [category]);
+    dispatch(fetchProducts(categoryId));
+    return () => {
+      dispatch(clearCategoryProducts());
+    };
+  }, [categoryId, dispatch]);
 
   return items.length ? (
     <div className={cn(cls, 'grid grid-cols-4 gap-step-4')}>
@@ -87,8 +92,10 @@ const ProductsList = ({
           </Link>
         ))}
     </div>
+  ) : isLoading ? (
+    <Preloader />
   ) : (
-    <div className="">Have no any products...</div>
+    <div className="text-quiet">Have no any products...</div>
   );
 };
 export default ProductsList;

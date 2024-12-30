@@ -1,5 +1,5 @@
 import { TagCssAttrs } from '@app/types';
 
-export type ProductDetailsProps = {
+export type ProductDataProps = {
   id: number;
 } & TagCssAttrs;
