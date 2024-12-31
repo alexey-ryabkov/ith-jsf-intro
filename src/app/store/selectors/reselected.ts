@@ -2,6 +2,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { ProductsSorting } from '@app/types';
 import {
+  selectCartItems,
   selectProductsFilter,
   selectProductsSorting,
   selectRawProducts,
@@ -58,3 +59,13 @@ export const makeSelectIsProductsFilterUsed = (ignoreOnlyDiscounted = false) =>
       );
     },
   );
+
+export const selectInCartSum = createSelector([selectCartItems], (items) => {
+  return (
+    items?.reduce(
+      (sum, { discont_price, price, quantity }) =>
+        sum + quantity * (discont_price ?? price),
+      0,
+    ) ?? 0
+  );
+});

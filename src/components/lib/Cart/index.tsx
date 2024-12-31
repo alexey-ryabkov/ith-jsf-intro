@@ -1,7 +1,9 @@
+import { useEffect, useState, type FC } from 'react';
 import { Link } from 'react-router';
-import { useEffect, useMemo, useRef, useState, type FC } from 'react';
-import { createOrder, getAllProducts } from '@app/services';
+import { API_BASE_URL, APP_ROUTES } from '@app/constants';
+import { createOrder } from '@app/services';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
+import { pluralized } from '@app/utils';
 import {
   showError,
   reportSuccess,
@@ -9,69 +11,25 @@ import {
   updCartItem,
   clearCart,
 } from '@store/actions';
-import Counter from '@ui/Counter';
-import TitleBox from '@ui/TitleBox';
-import UserDataForm from '@ui/UserDataForm';
-import { ReactComponent as CrossIcon } from '@assets/icons/cross.svg';
 import {
   selectInCartCount,
   selectCartItems,
   selectIsNotificationShowing,
+  selectInCartSum,
 } from '@store/selectors';
-import { Product, ProductsList, CartItem } from '@app/types';
-import { API_BASE_URL, APP_ROUTES } from '@app/constants';
-import { pluralized } from '@app/utils';
-
-type CartProduct = CartItem &
-  Pick<Product, 'title' | 'price' | 'discont_price' | 'image'> &
-  Partial<Omit<Product, 'id' | 'title' | 'price' | 'discont_price' | 'image'>>;
+import Counter from '@ui/Counter';
+import TitleBox from '@ui/TitleBox';
+import UserDataForm from '@ui/UserDataForm';
+import { ReactComponent as CrossIcon } from '@assets/icons/cross.svg';
 
 const Cart: FC = () => {
+  const cartItems = useAppSelector(selectCartItems);
   const count = useAppSelector(selectInCartCount);
-  const items = useAppSelector(selectCartItems);
-  const products = useRef<ProductsList>([]);
-  const [cartProducts, setCartProducts] = useState<CartProduct[] | null>(null);
+  const sum = useAppSelector(selectInCartSum);
 
   const isNotificationShowing = useAppSelector(selectIsNotificationShowing);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-
-  const sum = useMemo(
-    () =>
-      cartProducts?.reduce(
-        (sum, { discont_price, price, quantity }) =>
-          sum + quantity * (discont_price || price),
-        0,
-      ) ?? 0,
-    [cartProducts],
-  );
-
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    (async () => {
-      if (!products.current || !products.current.length) {
-        const result = await getAllProducts();
-        if (result && !('status' in result)) {
-          products.current = result;
-        }
-      }
-      setCartProducts(
-        items.map(({ productId, quantity }) => {
-          const product = products.current.find(({ id }) => id === productId);
-          return product
-            ? { productId, ...product, quantity }
-            : {
-                productId,
-                title: 'Unknown product',
-                price: 0,
-                discont_price: 0,
-                image: '',
-                quantity,
-              };
-        }),
-      );
-    })();
-  }, [items]);
 
   useEffect(() => {
     if (!isNotificationShowing && isOrderPlaced) {
@@ -80,13 +38,14 @@ const Cart: FC = () => {
     }
   }, [isNotificationShowing, isOrderPlaced, dispatch]);
 
-  return cartProducts?.length ? (
+  return cartItems.length ? (
     <div className="grid-left-bigger">
       <div className="space-y-step-2">
-        {cartProducts?.map(
-          ({ productId, title, price, discont_price, image, quantity }) => (
+        {cartItems.map((cartItem) => {
+          const { id, title, price, discont_price, image, quantity } = cartItem;
+          return (
             <div
-              key={productId}
+              key={id}
               className="bg-white bordered rounded flex space-x-step-4"
             >
               <div className="flex-none border-e border-outline">
@@ -99,14 +58,14 @@ const Cart: FC = () => {
               <div className="flex-auto padded-4 space-y-step-4">
                 <div className="flex items-start justify-between space-x-step-2">
                   <div>{title}</div>
-                  <button onClick={() => dispatch(delCartItem(productId))}>
+                  <button onClick={() => dispatch(delCartItem(id))}>
                     <CrossIcon className="w-step-3" />
                   </button>
                 </div>
                 <div className="flex items-center space-x-step-4">
                   <Counter
                     onChange={(value) =>
-                      dispatch(updCartItem({ productId, quantity: value }))
+                      dispatch(updCartItem({ ...cartItem, quantity: value }))
                     }
                     defaultValue={quantity}
                     className=""
@@ -120,8 +79,8 @@ const Cart: FC = () => {
                 </div>
               </div>
             </div>
-          ),
-        )}
+          );
+        })}
       </div>
       <div className="card-info">
         <TitleBox level={3} className="*:first:!font-bold">
@@ -137,7 +96,7 @@ const Cart: FC = () => {
           fulfilledLabel="Order is Placed"
           className="mt-step-4"
           onSubmit={async (user) => {
-            const result = await createOrder({ user, items });
+            const result = await createOrder({ user, items: cartItems });
             if (result) {
               const { status, message } = result;
               dispatch(

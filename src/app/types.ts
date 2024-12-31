@@ -26,8 +26,7 @@ export type UserData = {
   phone: string;
   email: string;
 };
-export type CartItem = {
-  productId: number;
+export type CartItem = Product & {
   quantity: number;
 };
 export type DiscountCouponRequest = UserData;

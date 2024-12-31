@@ -52,7 +52,7 @@ const CategoriesList = ({
   ) : isLoading ? (
     <Preloader />
   ) : (
-    <div className="text-quiet">Have no any categories...</div>
+    <div className="card text-center">Have no any categories...</div>
   );
 };
 export default CategoriesList;

@@ -28,7 +28,7 @@ const ProductData = ({ id, className: cls }: ProductDataProps) => {
   const dispatch = useAppDispatch();
 
   const isInCart = useMemo(
-    () => cartItems.some(({ productId }) => data?.id === productId),
+    () => data && cartItems.some(({ id }) => data.id === id),
     [cartItems, data],
   );
 
@@ -76,9 +76,7 @@ const ProductData = ({ id, className: cls }: ProductDataProps) => {
                   className="flex-none"
                 />
                 <button
-                  onClick={() =>
-                    dispatch(addCartItem({ productId: data.id, quantity }))
-                  }
+                  onClick={() => dispatch(addCartItem({ ...data, quantity }))}
                   className="btn flex-auto"
                 >
                   Add to cart
@@ -106,7 +104,7 @@ const ProductData = ({ id, className: cls }: ProductDataProps) => {
   ) : isLoading ? (
     <Preloader />
   ) : (
-    <div className="text-quiet">No data for this product...</div>
+    <div className="card text-center">No data for this product...</div>
   );
 };
 export default ProductData;

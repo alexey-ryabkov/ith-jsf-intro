@@ -31,20 +31,19 @@ const ProductsList = ({
   const cartItems = useAppSelector(selectCartItems);
   const dispatch = useAppDispatch();
 
-  const productsInCart = useMemo(() => {
-    const ids = [];
-    for (const { productId } of cartItems) {
-      ids.push(items.find(({ id }) => id === productId)?.id);
-    }
-    return ids.filter((id) => id);
-  }, [cartItems, items]);
-
   const ignoreOnlyDiscounted = onlyDiscounted !== undefined;
   const selectIsProductsFilterUsed = useCallback(
     makeSelectIsProductsFilterUsed(ignoreOnlyDiscounted),
     [ignoreOnlyDiscounted],
   );
   const isFilterUsed = useAppSelector(selectIsProductsFilterUsed);
+
+  const productsInCart = useMemo(() => {
+    const cartItemsIds = new Set(cartItems.map(({ id }) => id));
+    return items
+      .map(({ id }) => (cartItemsIds.has(id) ? id : null))
+      .filter((id) => id !== null);
+  }, [cartItems, items]);
 
   useEffect(() => {
     dispatch(fetchProducts(categoryId));
@@ -61,9 +60,9 @@ const ProductsList = ({
 
   return items.length ? (
     <div className={cn(cls, 'grid grid-cols-4 gap-step-4')}>
-      {items
-        .slice(0, limit)
-        .map(({ id, title, image, price, discont_price }) => (
+      {items.slice(0, limit).map((product) => {
+        const { id, title, image, price, discont_price } = product;
+        return (
           <Link
             key={id}
             to={`${APP_ROUTES.PRODUCTS}/${id}`}
@@ -86,7 +85,7 @@ const ProductsList = ({
                   dispatch(
                     productsInCart.includes(id)
                       ? delCartItem(id)
-                      : addCartItem({ productId: id, quantity: 1 }),
+                      : addCartItem({ ...product, quantity: 1 }),
                   );
                 }}
                 className="btn absolute inset-x-step-2 bottom-step-2 hidden group-hover:block"
@@ -106,7 +105,8 @@ const ProductsList = ({
               </div>
             </div>
           </Link>
-        ))}
+        );
+      })}
     </div>
   ) : isLoading ? (
     <Preloader />
