@@ -13,7 +13,9 @@ export const {
 
 export const {
   selectCategoryTitle,
-  selectItems: selectProducts,
+  selectItems: selectRawProducts,
+  selectFilter: selectProductsFilter,
+  selectSorting: selectProductsSorting,
   selectIsLoading: selectIsProductsLoading,
 } = productsSlice.selectors;
 

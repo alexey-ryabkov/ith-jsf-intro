@@ -55,9 +55,7 @@ const Dropdown = ({
   const handleOptionClick = (item: DropdownItem) => {
     setSelected(item);
     setIsOpen(false);
-    onChange?.({
-      target: { value: item.value },
-    } as ChangeEvent<HTMLSelectElement>);
+    onChange?.(item.value!);
   };
 
   return (
@@ -82,7 +80,7 @@ const Dropdown = ({
           </option>
         ))}
       </select>
-      <span className="text-quiet">{selected?.value || 'no set'}</span>
+      <span className="text-quiet">{selected?.label || 'no set'}</span>
       <ArrowIcon
         className={cn(
           { 'rotate-180': isOpen },

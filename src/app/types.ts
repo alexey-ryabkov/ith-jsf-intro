@@ -46,3 +46,16 @@ export const enum NotificationType {
   success,
   error,
 }
+
+export type ProductsFilterFields = {
+  price: [number, number];
+  onlyDiscounted: boolean;
+};
+
+export enum ProductsSorting {
+  default = 'by default',
+  newest = 'newest',
+  price_high2low = 'price: high-low',
+  price_low2high = 'price: low-high',
+}
+export type ProductSortingVar = keyof typeof ProductsSorting;

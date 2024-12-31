@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import BaseLayout from '@containers/BaseLayout';
-import ProductsFilter from '@components/ProductsFilter';
+import ProductsListSettings from '@components/ProductsListSettings';
 import ProductsList from '@components/ProductsList';
 import CategoryTitle from '@components/CategoryTitle';
 
@@ -9,7 +9,7 @@ const CategoryPage = () => {
   return (
     <BaseLayout className="pt-[7.25rem] px-step-5 pb-step-10">
       <CategoryTitle />
-      <ProductsFilter />
+      <ProductsListSettings />
       <ProductsList categoryId={Number(id)} />
     </BaseLayout>
   );

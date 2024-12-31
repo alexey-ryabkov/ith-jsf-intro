@@ -9,8 +9,13 @@ import {
 export const { setItems: setCategories, clear: clearCategories } =
   categoriesSlice.actions;
 
-export const { setData: setCategoryProducts, clear: clearCategoryProducts } =
-  productsSlice.actions;
+export const {
+  setData: setCategoryProducts,
+  setFilter: setProductsFilter,
+  setSorting: setProductsSorting,
+  resetFilterAndSorting: resetProductsFilterAndSorting,
+  clear: clearCategoryProducts,
+} = productsSlice.actions;
 
 export const { setData: setProductData, clear: clearProductData } =
   productDataSlice.actions;

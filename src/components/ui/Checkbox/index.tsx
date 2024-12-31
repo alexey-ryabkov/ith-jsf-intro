@@ -1,24 +1,33 @@
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { ReactComponent as CheckIcon } from '@assets/icons/check.svg';
 import type CheckboxProps from './types';
 
 const Checkbox = ({
   id,
-  value,
+  value = false,
+  onChange,
   children,
   className: cls,
   ...attrs
 }: CheckboxProps) => {
+  const [checked, setChecked] = useState(value);
+
+  useEffect(() => {
+    setChecked(value);
+  }, [value]);
+
   return (
-    <label
-      htmlFor={id}
-      className={cn(cls, 'flex items-baseline space-x-step-2')}
-    >
+    <label className={cn(cls, 'flex items-baseline space-x-step-2')}>
       <input
-        id={id}
-        value={value}
+        checked={checked}
         type="checkbox"
         className="sr-only peer"
+        onChange={(e) => {
+          const value = e.target.checked;
+          setChecked(value);
+          onChange?.(value);
+        }}
         {...attrs}
       />
       <span className="text-base-b peer-disabled:cursor-not-allowed">

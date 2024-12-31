@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Link } from 'react-router';
 import cn from 'classnames';
 import { API_BASE_URL, APP_ROUTES } from '@app/constants';
@@ -9,8 +9,10 @@ import {
   clearCategoryProducts,
   delCartItem,
   fetchProducts,
+  setProductsFilter,
 } from '@store/actions';
 import {
+  makeSelectIsProductsFilterUsed,
   selectCartItems,
   selectIsProductsLoading,
   selectProducts,
@@ -21,6 +23,7 @@ import { ProductsListProps } from './types';
 const ProductsList = ({
   categoryId = null,
   limit,
+  onlyDiscounted,
   className: cls,
 }: ProductsListProps) => {
   const isLoading = useAppSelector(selectIsProductsLoading);
@@ -36,12 +39,25 @@ const ProductsList = ({
     return ids.filter((id) => id);
   }, [cartItems, items]);
 
+  const ignoreOnlyDiscounted = onlyDiscounted !== undefined;
+  const selectIsProductsFilterUsed = useCallback(
+    makeSelectIsProductsFilterUsed(ignoreOnlyDiscounted),
+    [ignoreOnlyDiscounted],
+  );
+  const isFilterUsed = useAppSelector(selectIsProductsFilterUsed);
+
   useEffect(() => {
     dispatch(fetchProducts(categoryId));
     return () => {
       dispatch(clearCategoryProducts());
     };
   }, [categoryId, dispatch]);
+
+  useEffect(() => {
+    if (onlyDiscounted !== undefined) {
+      dispatch(setProductsFilter({ onlyDiscounted }));
+    }
+  }, [onlyDiscounted, dispatch]);
 
   return items.length ? (
     <div className={cn(cls, 'grid grid-cols-4 gap-step-4')}>
@@ -95,7 +111,11 @@ const ProductsList = ({
   ) : isLoading ? (
     <Preloader />
   ) : (
-    <div className="text-quiet">Have no any products...</div>
+    <div className="card text-center">
+      {isFilterUsed
+        ? 'There are no products suitable for the specified filter'
+        : 'Have no any products...'}
+    </div>
   );
 };
 export default ProductsList;

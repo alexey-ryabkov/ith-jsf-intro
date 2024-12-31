@@ -53,7 +53,7 @@ const MainPage = () => {
           >
             Sale
           </TitleBox>
-          <ProductsList limit={4} />
+          <ProductsList onlyDiscounted={true} limit={4} />
         </section>
       </div>
     </BaseLayout>

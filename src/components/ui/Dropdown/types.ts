@@ -7,4 +7,8 @@ export type DropdownItem = {
 export type DropdownProps = {
   items: DropdownItem[];
   defaultValue?: DropdownItem['value'];
-} & Omit<ComponentProps<'select'>, 'value' | 'multiple' | 'size' | 'children'>;
+  onChange?: (value: string | number) => void;
+} & Omit<
+  ComponentProps<'select'>,
+  'value' | 'multiple' | 'size' | 'children' | 'onChange'
+>;

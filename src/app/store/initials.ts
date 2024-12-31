@@ -1,10 +1,12 @@
-import type {
-  CartItem,
-  CategoriesList,
-  Category,
-  Notification,
-  Product,
-  ProductsList,
+import {
+  type CartItem,
+  type CategoriesList,
+  type Category,
+  type Notification,
+  type Product,
+  type ProductsList,
+  type ProductsFilterFields,
+  ProductSortingVar,
 } from '@app/types';
 
 export const initialCartState: { items: CartItem[] } = {
@@ -22,10 +24,14 @@ export const initialCategoriesState: {
 export const initialProductsState: {
   category: Category | null;
   items: ProductsList;
+  filter: ProductsFilterFields;
+  sorting: ProductSortingVar;
   loading: boolean;
 } = {
   category: null,
   items: [],
+  filter: { price: [-Infinity, Infinity], onlyDiscounted: false },
+  sorting: 'default',
   loading: false,
 };
 

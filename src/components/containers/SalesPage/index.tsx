@@ -1,6 +1,6 @@
 import BaseLayout from '@containers/BaseLayout';
-import ProductsFilter from '@components/ProductsFilter';
-import { ProductsFilterField } from '@components/ProductsFilter/types';
+import ProductsListSettings from '@components/ProductsListSettings';
+import { ProductsListSettingsField } from '@components/ProductsListSettings/types';
 import ProductsList from '@components/ProductsList';
 import TitleBox from '@ui/TitleBox';
 
@@ -8,10 +8,13 @@ const SalesPage = () => {
   return (
     <BaseLayout className="pt-[7.25rem] px-step-5 pb-step-10">
       <TitleBox level={2}>Discounted items</TitleBox>
-      <ProductsFilter
-        fields={[ProductsFilterField.price, ProductsFilterField.sort]}
+      <ProductsListSettings
+        fields={[
+          ProductsListSettingsField.price,
+          ProductsListSettingsField.sort,
+        ]}
       />
-      <ProductsList />
+      <ProductsList onlyDiscounted={true} />
     </BaseLayout>
   );
 };
