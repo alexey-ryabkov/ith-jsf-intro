@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { sendCouponRequest } from '@app/services';
 import TitleBox from '@ui/TitleBox';
-import UserDataForm from '@ui/UserDataForm';
+import UserDataForm from '@components/UserDataForm';
 import { LeadMagnetBoxProps } from './types';
 import { useAppDispatch } from '@app/hooks';
 import { reportSuccess, showError } from '@app/store/actions';

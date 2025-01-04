@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import CartBox from '@components/CartBox';
 import { APP_ROUTES } from '@app/constants';
-import AppNav from '@components/AppNav';
+import AppNav from '@ui/AppNav';
 import { ReactComponent as Logo } from '@assets/icons/logo.svg';
 
 const LayoutHeader = () => {

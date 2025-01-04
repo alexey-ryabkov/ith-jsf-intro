@@ -23,7 +23,7 @@ import {
 } from '@store/selectors';
 import Counter from '@ui/Counter';
 import TitleBox from '@ui/TitleBox';
-import UserDataForm from '@ui/UserDataForm';
+import UserDataForm from '@components/UserDataForm';
 import { ReactComponent as CrossIcon } from '@assets/icons/cross.svg';
 
 const priceFormatterSumOpts = priceFormatterDefOpts;
