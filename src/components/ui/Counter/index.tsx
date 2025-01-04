@@ -5,7 +5,7 @@ import { ReactComponent as PlusIcon } from '@assets/icons/plus.svg';
 import type CounterProps from './types';
 
 const BTN_CLS_UTILS = `absolute top-0 w-large aspect-square text-quiet bordered rounded-small 
-  flex items-center justify-center  *:disabled:opacity-25 disabled:cursor-not-allowed`;
+  flex items-center justify-center *:disabled:opacity-25 disabled:cursor-not-allowed`;
 
 const Counter = ({
   min = 1,
@@ -32,7 +32,10 @@ const Counter = ({
   const [inputValue, setInputValue] = useState(String(quantity));
 
   const notifyChange = (value: number) => {
-    onChange?.(value);
+    // make it async to avoid setState while rendering dependent comps
+    setTimeout(() => {
+      onChange?.(value);
+    });
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
