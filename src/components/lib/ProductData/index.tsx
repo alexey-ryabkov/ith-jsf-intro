@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
 import { API_BASE_URL } from '@app/constants';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { discountPercent } from '@app/utils';
+import { discountPercent, formatPrice } from '@app/utils';
 import {
   selectCartItems,
   selectIsProductDataLoading,
@@ -42,17 +42,23 @@ const ProductData = ({ id, className: cls }: ProductDataProps) => {
   return data ? (
     <div className={cn(cls, 'grid-left-bigger')}>
       <div className="">
-        <img className="rounded" src={`${API_BASE_URL}${image}`} alt={title} />
+        <img
+          className="w-full object-cover rounded"
+          src={`${API_BASE_URL}${image}`}
+          alt={title}
+        />
       </div>
       <div className="">
         <TitleBox level={3}>{title}</TitleBox>
         <div className="space-y-step-4">
           <div className="inline-flex items-baseline space-x-step-2 relative">
             <span className="text-xl text-black">
-              ${discont_price ?? price}
+              {formatPrice(discont_price ?? price!)}
             </span>
             {discont_price && (
-              <span className="text-lg text-quiet line-through">${price}</span>
+              <span className="text-lg text-quiet line-through">
+                {formatPrice(price!)}
+              </span>
             )}
             {discont_price && (
               <span className="badge absolute top-0 -right-step-2 transform translate-x-full !mx-0">
@@ -88,14 +94,6 @@ const ProductData = ({ id, className: cls }: ProductDataProps) => {
             <div>
               <TitleBox level={4}>Description</TitleBox>
               <p className="paragraph">{description}</p>
-              {/* <div className="h-[14rem] line-clamp-[10]">
-                <p className="paragraph">{description}</p>
-              </div> */}
-              {/* <div className="mt-step-1">
-                <a href="#" className="link">
-                  Read more
-                </a>
-              </div> */}
             </div>
           )}
         </div>

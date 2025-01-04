@@ -7,7 +7,8 @@ export const enum APP_ROUTES {
   UNKNOWN = '/404',
 }
 
-export const API_BASE_URL = 'http://localhost:3333';
+export const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL ?? 'http://localhost:3333';
 export const enum API_ENDPOINTS {
   CATEGORY = '/categories',
   PRODUCT = '/products',
@@ -22,3 +23,10 @@ export const enum STORE_REDUCERS {
   PRODUCT_DATA = 'product_data',
   NOTIFICATION = 'notification',
 }
+
+export const priceFormatterDefOpts = {
+  style: 'currency' as const,
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+};

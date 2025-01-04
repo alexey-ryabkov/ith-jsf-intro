@@ -1,9 +1,13 @@
-import { useEffect, useState, type FC } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { API_BASE_URL, APP_ROUTES } from '@app/constants';
+import {
+  API_BASE_URL,
+  APP_ROUTES,
+  priceFormatterDefOpts,
+} from '@app/constants';
 import { createOrder } from '@app/services';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { pluralized } from '@app/utils';
+import { formatPrice, pluralized } from '@app/utils';
 import {
   showError,
   reportSuccess,
@@ -22,7 +26,10 @@ import TitleBox from '@ui/TitleBox';
 import UserDataForm from '@ui/UserDataForm';
 import { ReactComponent as CrossIcon } from '@assets/icons/cross.svg';
 
-const Cart: FC = () => {
+const priceFormatterSumOpts = priceFormatterDefOpts;
+priceFormatterSumOpts.minimumFractionDigits = 2;
+
+const Cart = () => {
   const cartItems = useAppSelector(selectCartItems);
   const count = useAppSelector(selectInCartCount);
   const sum = useAppSelector(selectInCartSum);
@@ -46,18 +53,21 @@ const Cart: FC = () => {
           return (
             <div
               key={id}
-              className="bg-white bordered rounded flex space-x-step-4"
+              className="bg-white bordered rounded flex h-[11.25rem] items-stretch overflow-hidden"
             >
-              <div className="flex-none border-e border-outline">
+              <Link
+                to={`${APP_ROUTES.PRODUCTS}/${id}`}
+                className="flex-none w-[12.5rem] border-e border-outline"
+              >
                 <img
-                  className="w-[12.5rem] rounded"
+                  className="size-full object-cover"
                   src={`${API_BASE_URL}${image}`}
                   alt={title}
                 />
-              </div>
-              <div className="flex-auto padded-4 space-y-step-4">
+              </Link>
+              <div className="flex-auto  padded-4 space-y-step-4">
                 <div className="flex items-start justify-between space-x-step-2">
-                  <div>{title}</div>
+                  <div className="max-w-[29.375rem] truncate">{title}</div>
                   <button onClick={() => dispatch(delCartItem(id))}>
                     <CrossIcon className="w-step-3" />
                   </button>
@@ -71,9 +81,13 @@ const Cart: FC = () => {
                     className=""
                   />
                   <div className="flex items-baseline space-x-step-2">
-                    <span className="text-lg-b">${discont_price ?? price}</span>
+                    <span className="text-lg-b">
+                      {formatPrice(discont_price ?? price)}
+                    </span>
                     {discont_price && (
-                      <span className="text-quiet line-through">${price}</span>
+                      <span className="text-quiet line-through">
+                        {formatPrice(price)}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -89,7 +103,12 @@ const Cart: FC = () => {
         <div className="text-lg text-quiet">{pluralized(count)}</div>
         <div className="flex justify-between items-baseline text-lg text-quiet">
           Total
-          <span className="text-xl text-black">${sum}</span>
+          <span className="text-xl text-black">
+            {formatPrice(
+              sum,
+              new Intl.NumberFormat('en-US', priceFormatterSumOpts),
+            )}
+          </span>
         </div>
         <UserDataForm
           btnLabel="Order"

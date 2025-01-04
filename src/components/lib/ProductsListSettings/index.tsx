@@ -15,18 +15,12 @@ import { usePriceInput } from './usePriceInput';
 
 const ProductsListSettings = ({
   fields,
-  // preset,
   className: cls,
 }: ProductsListSettingsProps) => {
-  // TODO я этим компонентом задаю фильтр, а не беру что там кем то задано в сторе... либо из пропсов брать
-  // нужно ли синхронизовать это?
-
   const {
     price: [priceFrom, priceTo],
     onlyDiscounted,
   } = useAppSelector(selectProductsFilter);
-
-  // console.log('onlyDiscounted', onlyDiscounted);
 
   const sorting = useAppSelector(selectProductsSorting);
   const dispatch = useAppDispatch();
@@ -86,7 +80,7 @@ const ProductsListSettings = ({
             id="price_from"
             placeholder="from"
             type="text"
-            className="w-[7rem] text-sm-b text-quiet padded-1-2 bordered rounded-small"
+            className="w-[7rem] h-[2.25rem] text-sm-b text-quiet padded-1-2 bordered rounded-small"
             autoComplete="off"
           />
           <input
@@ -99,7 +93,7 @@ const ProductsListSettings = ({
             placeholder="to"
             type="text"
             defaultValue={isFinite(priceTo) ? priceTo : undefined}
-            className="w-[7rem] text-sm-b text-quiet padded-1-2 bordered rounded-small"
+            className="w-[7rem] h-[2.25rem] text-sm-b text-quiet padded-1-2 bordered rounded-small"
             autoComplete="off"
           />
         </div>
@@ -134,7 +128,7 @@ const ProductsListSettings = ({
               value,
             }))}
             id="sorting"
-            className="w-[12.5rem]"
+            className="w-[12.5rem] h-[2.25rem]"
             defaultValue={sorting}
             autoComplete="off"
           />

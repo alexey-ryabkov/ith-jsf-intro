@@ -43,7 +43,13 @@ const TitleBox = ({
       )}
     >
       <TitleTag
-        className={cn('flex-none', fontSize, { 'me-step-4': divider })}
+        className={cn(
+          fontSize,
+          { 'flex-none': divider || tail },
+          {
+            'me-step-4': divider,
+          },
+        )}
         {...attrs}
       >
         {children}

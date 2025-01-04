@@ -75,7 +75,7 @@ const UserDataForm = ({
           {...register('phone', {
             required: 'Phone is required',
             pattern: {
-              value: /^\+?[1-9][0-9]{7,14}/,
+              value: /^\+?[1-9][0-9]{7,14}$/,
               message: 'Invalid phone number format',
             },
           })}

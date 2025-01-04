@@ -34,15 +34,13 @@ const CategoriesList = ({
     <div className={wrapperCls}>
       {items.slice(0, limit).map(({ id, title, image }) => (
         <div key={id} className="space-y-step-2 text-center">
-          <div>
-            <Link to={`${APP_ROUTES.CATEGORIES}/${id}`}>
-              <img
-                className="rounded"
-                src={`${API_BASE_URL}${image}`}
-                alt={title}
-              />
-            </Link>
-          </div>
+          <Link to={`${APP_ROUTES.CATEGORIES}/${id}`}>
+            <img
+              className="w-full h-[21.875rem] object-cover rounded"
+              src={`${API_BASE_URL}${image}`}
+              alt={title}
+            />
+          </Link>
           <div>
             <Link to={`${APP_ROUTES.CATEGORIES}/${id}`}>{title}</Link>
           </div>

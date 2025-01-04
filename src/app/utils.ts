@@ -3,6 +3,7 @@ import { ApiRequest, ApiResponse, ApiStatusMessage } from '@app/types';
 import { statusMessageSchema } from '@app/schemas';
 import { store } from '@app/store';
 import { showError } from '@store/actions';
+import { priceFormatterDefOpts } from './constants';
 
 export async function processApiRequest<
   T extends object | undefined = undefined,
@@ -52,6 +53,11 @@ export function checkFetchResultAndHandleFailed<T extends object>(
 
 export const discountPercent = (price: number, discountPrice?: number) =>
   discountPrice ? Math.round(((price - discountPrice) * 100) / price) : 0;
+
+const usDollarFormatter = new Intl.NumberFormat('en-US', priceFormatterDefOpts);
+export const formatPrice = (price: number, formatter = usDollarFormatter) =>
+  formatter.format(price);
+// price.toFixed(2).replace('.', ',');
 
 export const pluralized = (
   count: number,

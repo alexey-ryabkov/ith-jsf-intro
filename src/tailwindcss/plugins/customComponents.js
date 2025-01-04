@@ -15,9 +15,9 @@ module.exports = plugin(function ({ addComponents, matchComponents, theme }) {
     },
     '.paragraph': {
       '@apply text-sm': '',
-    },
-    '.paragraph + .paragraph': {
-      '@apply pt-step-2': '',
+      '&+.paragraph': {
+        '@apply pt-step-2': '',
+      },
     },
     '.divider': {
       '@apply my-step-2': '',
@@ -85,7 +85,7 @@ module.exports = plugin(function ({ addComponents, matchComponents, theme }) {
           '@apply text-base-b rounded-small padded-half-1': '',
         },
         rounded: {
-          '@apply text-xs rounded-full padded-1 text-center': '',
+          '@apply text-xs rounded-full w-[1.6875rem] padded-1 text-center': '',
           height: '1.6875rem',
           aspectRatio: '1 / 1',
           textAlign: 'center',
